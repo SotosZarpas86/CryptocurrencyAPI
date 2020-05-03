@@ -31,13 +31,10 @@ namespace CryptoCurrencyAPI.DataLayer.Repositories
 
         public async Task InsertAsync(Cryptocurrency cryptocurrency)
         {
-            if(cryptocurrency.Id == Guid.Empty)
-                cryptocurrency.Id = Guid.NewGuid();
-
+            if(cryptocurrency.Id == Guid.Empty) cryptocurrency.Id = Guid.NewGuid();
             var dbRow = await _context.Cryptocurrencies.FirstOrDefaultAsync(c => c.Id == cryptocurrency.Id);
-            if (dbRow != null)
-                throw new Exception("There is already a record with the provided Id");
-            
+            if (dbRow != null) throw new Exception("There is already a record with the provided Id");           
+           
             await _context.Cryptocurrencies.AddAsync(cryptocurrency);
             await _context.SaveChangesAsync();
         }
